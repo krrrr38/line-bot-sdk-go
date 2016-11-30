@@ -1,0 +1,30 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"path": "context",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "h8ZzyQTRljjxHgqCHniOd1hURV8=",
+			"path": "github.com/line/line-bot-sdk-go/linebot",
+			"revision": "8c17d7b4b461d3b2a8ada80137f991d8f58f60d5",
+			"revisionTime": "2016-11-21T06:21:17Z"
+		},
+		{
+			"checksumSHA1": "9jjO5GjLa0XF/nfWihF02RoH4qc=",
+			"path": "golang.org/x/net/context",
+			"revision": "97edce0b2e423f6a8debb459af47f4a3cb4ff954",
+			"revisionTime": "2016-12-02T00:04:21Z"
+		},
+		{
+			"checksumSHA1": "WHc3uByvGaMcnSoI21fhzYgbOgg=",
+			"path": "golang.org/x/net/context/ctxhttp",
+			"revision": "97edce0b2e423f6a8debb459af47f4a3cb4ff954",
+			"revisionTime": "2016-12-02T00:04:21Z"
+		}
+	],
+	"rootPath": "github.com/krrrr38/line-bot-sdk-go",
+	"goVersion": "go1.7"
+}

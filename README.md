@@ -1,128 +1,32 @@
-# line-bot-sdk-go
+# golang echo - LINE Messaging API
 
-[![Build Status](https://travis-ci.org/line/line-bot-sdk-go.svg?branch=master)](https://travis-ci.org/line/line-bot-sdk-go)
+Sample echo-bot
 
-Go SDK for the LINE Messaging API
+## Getting started local env
 
+```
+$ export CHANNEL_SECRET=YOUR_LINE_CHANNEL_SECRET
+$ export CHANNEL_TOKEN=YOUR_LINE_CHANNEL_ACCESS_TOKEN
 
-## About LINE Messaging API
+$ go get -u github.com/line/line-bot-sdk-go/linebot
+$ go run main.go
+```
 
-See the official API documentation for more information.
+## Getting started with Heroku
 
-English: https://devdocs.line.me/en/<br>
-Japanese: https://devdocs.line.me/ja/
+### heruku button
 
-## Installation ##
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/krrrr38/line-bot-sdk-go)
+
+then set Webhook URL: `https://{YOUR_APP}.herokuapp.com/callback`
+
+### deploy by yourself
 
 ```sh
-$ go get github.com/line/line-bot-sdk-go/linebot
+heroku create
+heroku info # then set Webhook URL: https://{YOUR_APP}.herokuapp.com/callback
+heroku config:set CHANNEL_SECRET="..."
+heroku config:set CHANNEL_TOKEN="..."
+git push heroku master
+heroku logs
 ```
-
-## Configuration ##
-
-```go
-import (
-	"github.com/line/line-bot-sdk-go/linebot"
-)
-
-func main() {
-	bot, err := linebot.New("<channel secret>", "<channel access token>")
-	...
-}
-
-```
-
-### Configuration with http.Client ###
-
-```go
-	client := &http.Client{}
-	bot, err := linebot.New("<channel secret>", "<channel accsss token>", linebot.WithHTTPClient(client))
-	...
-```
-
-## How to start ##
-
-The LINE Messaging API uses the JSON data format.
-```ParseRequest()``` will help you to parse the ```*http.Request``` content and return a slice of Pointer point to Event Object.
-
-```go
-	events, err := bot.ParseRequest(req)
-	if err != nil {
-		// Do something when something bad happened.
-	}
-```
-
-The LINE Messaging API defines 7 types of event - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin```, ```EventTypeLeave```, ```EventTypePostback```, ```EventTypeBeacon```. You can check the event type by using ```event.Type```
-
-```go
-	for _, event := range events {
-		if event.Type == linebot.EventTypeMessage {
-			// Do Something...
-		}
-	}
-```
-
-### Receiver ###
-
-To send a message to a user, group, or room, you need either an ID
-
-```go
-	userID := event.Source.UserID
-	groupID := event.Source.GroupID
-	RoomID := event.Source.RoomID
-```
-
-or a reply token.
-
-```go
-	replyToken := event.ReplyToken
-```
-
-### Create message ###
-
-The LINE Messaging API provides various types of message. To create a message, use ```New<Type>Message()```.
-
-```go
-	leftBtn := linebot.NewMessageTemplateAction("left", "left clicked")
-	rightBtn := linebot.NewMessageTemplateAction("right", "right clicked")
-
-	template := linebot.NewConfirmTemplate("Hello World", leftBtn, rightBtn)
-
-	messgage := linebot.NewTemplateMessage("Sorry :(, please update your app.", template)
-```
-
-### Send message ###
-
-With an ID, you can send message using ```PushMessage()```
-
-```go
-	var messages []linebot.Message
-
-	// append some message to messages
-
-	_, err := bot.PushMessage(ID, messages...).Do()
-	if err != nil {
-		// Do something when some bad happened
-	}
-```
-
-With a reply token, you can reply to messages using ```ReplyMessage()```
-
-```go
-	var messages []linebot.Message
-
-	// append some message to messages
-
-	_, err := bot.ReplyMessage(replyToken, messages...).Do()
-	if err != nil {
-		// Do something when some bad happened
-	}
-```
-
-## Requirements
-
-This library requires Go 1.6 or later.
-
-## LICENSE
-
-See LICENSE.txt
